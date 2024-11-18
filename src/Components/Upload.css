@@ -1,0 +1,139 @@
+/* Main container for the form and image */
+.upload-page-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 20px;
+    padding: 50px;
+}
+
+/* Form container styling */
+.form-container {
+    flex: 1;
+    max-width: 48%;
+    /* Ensures the form takes up half the screen on large screens */
+    margin-right: 20px;
+}
+
+/* Style for each form row to align input elements */
+.form-row {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Label and input styles */
+label {
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+}
+
+input,
+textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Button styling */
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Image container styling */
+.image-container {
+    flex: 1;
+    max-width: 48%;
+    /* Ensures the image and text take up half the screen on large screens */
+    text-align: center;
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+    margin-bottom: 20px;
+}
+
+.image-container p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .upload-page-container {
+        flex-direction: column;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .form-container{
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 460px) {
+
+    /* Adjust layout for mobile view */
+    .upload-page-container {
+        flex-direction: column;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .form-container {
+        max-width: 100%;
+        padding: 0 10px;
+        margin-top: 10px;
+    }
+
+
+    .image-container {
+        display: none;
+    }
+
+    
+    .form-row {
+        flex-direction: column;
+    }
+
+    .form-container label,
+    .form-container input,
+    .form-container textarea {
+        width: 100%;
+    }
+
+
+    .form-container input,
+    .form-container textarea {
+        padding: 8px;
+        font-size: 14px;
+    }
+}

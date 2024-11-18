@@ -1,0 +1,50 @@
+/* Add styles for the header-container to align its contents */
+.header-container {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    background-color: #f1f1f1;
+}
+
+/* Optionally, style the logo */
+.header-container img {
+    width: 100px;
+    height: auto;
+    margin-top: 14px;
+}
+
+
+.header-container h1 {
+    position: absolute;
+    left: 50%;
+   
+    transform: translateX(-50%);
+       
+    color: #333;
+}
+@media (max-width: 768px) {
+    .header-container h1 {
+        font-size: 1.5rem;
+        /* Adjust font size for medium screens */
+    }
+
+    .header-container img {
+        width: 80px;
+        /* Resize the logo for smaller screens */
+    }
+}
+
+@media (max-width: 460px) {
+   
+    .header-container h1 {
+        font-size: 1rem;
+        font-weight: 800;
+        /* Smaller font size for very small screens */
+    }
+
+    
+    .header-container img {
+        width: 60px;
+        /* Resize the logo for very small screens */
+    }
+}

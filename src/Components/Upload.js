@@ -37,7 +37,7 @@ const Upload = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/publications",
+        process.env.REACT_APP_BACKEND_URL,
         publicationData
       );
       console.log("Publication submitted:", response.data);

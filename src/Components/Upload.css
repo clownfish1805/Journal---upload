@@ -1,21 +1,21 @@
-/* Main container for the form and image */
+.view-container{
+    margin-top: 20px;
+    margin-left: 60px;
+}
 .upload-page-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin: 20px;
+    margin: 10px;
     padding: 50px;
 }
 
-/* Form container styling */
 .form-container {
     flex: 1;
     max-width: 48%;
-    /* Ensures the form takes up half the screen on large screens */
-    margin-right: 20px;
 }
 
-/* Style for each form row to align input elements */
+
 .form-row {
     margin-bottom: 15px;
     display: flex;
@@ -23,7 +23,6 @@
     gap: 20px;
 }
 
-/* Label and input styles */
 label {
     font-weight: bold;
     display: flex;
@@ -44,10 +43,9 @@ textarea {
     resize: vertical;
 }
 
-/* Button styling */
 button {
     padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: #4376ec;
     color: white;
     border: none;
     border-radius: 5px;
@@ -56,7 +54,7 @@ button {
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #749dc5;
 }
 
 /* Image container styling */
@@ -116,14 +114,22 @@ button:hover {
 
 
     .image-container {
-        display: none;
+        /* display: flex; */
+        display: block;
     }
 
+    .image-container h1{
+       font-size: 15px;
+    }
     
     .form-row {
         flex-direction: column;
     }
 
+    .view-container{
+        display: flex;
+        align-items: center;
+    }
     .form-container label,
     .form-container input,
     .form-container textarea {

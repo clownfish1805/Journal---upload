@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Header from "./Header";
-import "./Upload.css"; // Assuming you use an external CSS file for styling
+import "./Upload.css";
+import sideimage from "../Assets/sideimage.svg";
+import { useNavigate } from "react-router-dom";
 
 const Upload = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +15,8 @@ const Upload = () => {
     data: "",
     link: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -57,9 +61,16 @@ const Upload = () => {
     }
   };
 
+  const handleview = () => {
+    navigate("/publications");
+  };
+
   return (
     <>
       <Header />
+      <div className="view-container">
+        <button onClick={handleview}>View Publications</button>
+      </div>
       <div className="upload-page-container">
         <div className="form-container">
           <form onSubmit={handleSubmit}>
@@ -146,7 +157,8 @@ const Upload = () => {
           </form>
         </div>
         <div className="image-container">
-          <h1>one click to update on IJAE</h1>
+          <h1>One click to update on IJEAE</h1>
+          <img src={sideimage}></img>
         </div>
       </div>
     </>

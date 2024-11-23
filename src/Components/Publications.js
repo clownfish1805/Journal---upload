@@ -16,7 +16,7 @@ const Publications = () => {
         );
         const data = await response.json();
         setPublications(data);
-        setFilteredPublications(data); // Set the initial filtered list
+        setFilteredPublications(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -25,7 +25,6 @@ const Publications = () => {
     fetchPublications();
   }, []);
 
-  // Filter publications based on the search query
   const handleSearch = () => {
     const filtered = publications.filter((publication) =>
       publication.title.toLowerCase().includes(searchQuery.toLowerCase())

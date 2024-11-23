@@ -107,6 +107,12 @@
         padding: 10px;
     }
 
+        .publication-table td:nth-child(5),
+      
+        .publication-table th:nth-child(5) {
+            display: none;
+        }
+
     .delete-button {
         font-size: 0.8rem;
         padding: 5px;
@@ -122,6 +128,10 @@
     .search-bar,
     .search-button {
         font-size: 0.9rem;
+    }
+
+    .publication-table{
+        margin: 0;
     }
 
     .publication-table th,

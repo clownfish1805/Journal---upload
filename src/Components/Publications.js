@@ -25,14 +25,29 @@ const Publications = () => {
     fetchPublications();
   }, []);
 
-  const handleSearch = () => {
-    const filtered = publications.filter((publication) =>
-      publication.title.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredPublications(filtered);
-  };
+  // Debounced search
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const filtered = publications.filter((publication) =>
+        publication.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredPublications(filtered);
+    }, 300);
+
+    return () => clearTimeout(timer); // Cleanup on unmount or query change
+  }, [searchQuery, publications]);
 
   const handleDelete = async (id) => {
+    if (!id) {
+      console.error("Invalid ID:", id);
+      alert("Failed to delete. Invalid publication ID.");
+      return;
+    }
+
+    // Disable the delete button temporarily
+    const deleteButton = document.querySelector(`button[data-id="${id}"]`);
+    if (deleteButton) deleteButton.disabled = true;
+
     try {
       const response = await fetch(
         `https://publication-backend-klr9.onrender.com/publications/${id}`,
@@ -42,17 +57,12 @@ const Publications = () => {
       );
 
       if (response.ok) {
-        // Remove the deleted publication from the state
+        // Update state to remove deleted publication
         const updatedPublications = publications.filter(
-          (publication) => publication.id !== id
+          (publication) => publication.id !== id && publication._id !== id
         );
         setPublications(updatedPublications);
-
-        // Update filtered publications in case of active search
-        const updatedFilteredPublications = filteredPublications.filter(
-          (publication) => publication.id !== id
-        );
-        setFilteredPublications(updatedFilteredPublications);
+        setFilteredPublications(updatedPublications);
 
         alert("Publication deleted successfully!");
       } else {
@@ -61,6 +71,8 @@ const Publications = () => {
     } catch (error) {
       console.error("Error deleting publication:", error);
       alert("An error occurred. Please try again.");
+    } finally {
+      if (deleteButton) deleteButton.disabled = false;
     }
   };
 
@@ -78,13 +90,10 @@ const Publications = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
             className="search-bar"
           />
-          <button onClick={handleSearch} className="search-button">
-            Search
-          </button>
         </div>
 
         <div>
-          {filteredPublications.length > 0 ? (
+          {filteredPublications && filteredPublications.length > 0 ? (
             <table className="publication-table">
               <thead>
                 <tr>
@@ -93,25 +102,34 @@ const Publications = () => {
                   <th>Year</th>
                   <th>Volume</th>
                   <th>Content</th>
-                  <th>Date</th>
+                  <th>Link</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredPublications.map((publication, index) => (
-                  <tr key={publication.id}>
+                  <tr key={publication.id || publication._id}>
                     <td>{index + 1}</td>
                     <td>{publication.title}</td>
                     <td>{publication.year}</td>
                     <td>{publication.volume}</td>
                     <td>{publication.content}</td>
                     <td>
-                      <a href={publication.link}>Pdf</a>
+                      <a
+                        href={publication.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Pdf
+                      </a>
                     </td>
                     <td>
                       <button
                         className="delete-button"
-                        onClick={() => handleDelete(publication.id)}
+                        data-id={publication.id || publication._id}
+                        onClick={() =>
+                          handleDelete(publication.id || publication._id)
+                        }
                       >
                         Delete
                       </button>

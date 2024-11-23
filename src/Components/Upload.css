@@ -57,11 +57,10 @@ button:hover {
     background-color: #749dc5;
 }
 
-/* Image container styling */
+
 .image-container {
     flex: 1;
     max-width: 48%;
-    /* Ensures the image and text take up half the screen on large screens */
     text-align: center;
 }
 
@@ -77,13 +76,14 @@ button:hover {
     color: #555;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
     .upload-page-container {
         flex-direction: column;
         align-items: center;
         margin: 0;
         padding: 0;
+        width: 100%;
     }
 
     .form-container{
@@ -96,7 +96,7 @@ button:hover {
     }
 }
 
-@media (max-width: 460px) {
+@media (max-width: 490px) {
 
     /* Adjust layout for mobile view */
     .upload-page-container {

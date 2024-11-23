@@ -8,7 +8,8 @@ const Header = () => {
       <div className="header-container">
         <img src={logo}></img>
         <h1>
-          <span style={{ color: "blue" }}>International</span> Journal of
+          <span style={{ color: "blue" }}>International</span> Journal of{" "}
+          <span style={{ color: "blue" }}>English for </span>
           Academic <span style={{ color: "blue" }}>Excellence</span>
         </h1>
       </div>

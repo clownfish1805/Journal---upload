@@ -80,16 +80,18 @@ const Upload = () => {
                 <input
                   type="number"
                   name="year"
+                  placeholder="20xx"
                   value={formData.year}
                   onChange={handleChange}
                   required
                 />
               </label>
               <label>
-                Volume:
+                Volume(Issue):
                 <input
-                  type="number"
+                  type="text"
                   name="volume"
+                  placeholder="Volume 1(1)"
                   value={formData.volume}
                   onChange={handleChange}
                   required

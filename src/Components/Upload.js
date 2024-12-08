@@ -12,32 +12,47 @@ const Upload = () => {
     issue: "",
     title: "",
     content: "",
-    data: "",
+    date: "",
     link: "",
+    specialIssue: "No",
   });
+
+  const [volumeError, setVolumeError] = useState("");
 
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+
+    if (name === "volume") {
+      const volumeRegex = /^\d+\(\d+\)$/; // Volume format like 1(1)
+      if (!volumeRegex.test(value)) {
+        setVolumeError("Please follow the format: X(Y) e.g., 1(1)");
+      } else {
+        setVolumeError("");
+      }
+    }
+
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Parse 'data' field to JSON if it's an object
-    let formattedData = formData.data;
-    try {
-      formattedData = JSON.parse(formData.data);
-    } catch (error) {
-      console.error("Error parsing data field. Ensure it is valid JSON.");
+    if (volumeError) {
+      alert("Please fix the errors before submitting.");
+      return;
     }
 
     const publicationData = {
       ...formData,
-      data: formattedData,
+      isSpecialIssue: formData.specialIssue === "Yes" ? true : false,
     };
+
+    console.log("Data being sent to backend:", publicationData);
 
     try {
       const response = await axios.post(
@@ -52,8 +67,9 @@ const Upload = () => {
         issue: "",
         title: "",
         content: "",
-        data: "",
+        date: "",
         link: "",
+        specialIssue: "No",
       });
     } catch (error) {
       console.error("Error submitting publication:", error);
@@ -61,7 +77,7 @@ const Upload = () => {
     }
   };
 
-  const handleview = () => {
+  const handleView = () => {
     navigate("/publications");
   };
 
@@ -69,7 +85,7 @@ const Upload = () => {
     <>
       <Header />
       <div className="view-container">
-        <button onClick={handleview}>View Publications</button>
+        <button onClick={handleView}>View Publications</button>
       </div>
       <div className="upload-page-container">
         <div className="form-container">
@@ -91,13 +107,30 @@ const Upload = () => {
                 <input
                   type="text"
                   name="volume"
-                  placeholder="Volume 1(1)"
+                  placeholder="1(1)"
                   value={formData.volume}
                   onChange={handleChange}
                   required
                 />
               </label>
+              {volumeError && <p className="error">{volumeError}</p>}
             </div>
+
+            <div className="form-row">
+              <label>
+                Special Issue:
+                <select
+                  name="specialIssue"
+                  value={formData.specialIssue}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="No">No</option>
+                  <option value="Yes">Yes</option>
+                </select>
+              </label>
+            </div>
+
             <div className="form-row">
               <label>
                 Issue:
@@ -114,12 +147,14 @@ const Upload = () => {
                 <input
                   type="text"
                   name="title"
+                  placeholder="Title of the Journal"
                   value={formData.title}
                   onChange={handleChange}
                   required
                 />
               </label>
             </div>
+
             <div className="form-row">
               <label>
                 Content:
@@ -131,6 +166,7 @@ const Upload = () => {
                 />
               </label>
             </div>
+
             <div className="form-row">
               <label>
                 Date:
@@ -143,6 +179,7 @@ const Upload = () => {
                 />
               </label>
             </div>
+
             <div className="form-row">
               <label>
                 Link:
@@ -155,12 +192,13 @@ const Upload = () => {
                 />
               </label>
             </div>
+
             <button type="submit">Submit</button>
           </form>
         </div>
         <div className="image-container">
           <h1>One click to update on IJEAE</h1>
-          <img src={sideimage}></img>
+          <img src={sideimage} alt="Side illustration" />
         </div>
       </div>
     </>

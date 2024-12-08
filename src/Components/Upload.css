@@ -1,7 +1,8 @@
-.view-container{
+.view-container {
     margin-top: 20px;
     margin-left: 60px;
 }
+
 .upload-page-container {
     display: flex;
     flex-wrap: wrap;
@@ -14,7 +15,6 @@
     flex: 1;
     max-width: 48%;
 }
-
 
 .form-row {
     margin-bottom: 15px;
@@ -31,11 +31,16 @@ label {
 }
 
 input,
-textarea {
+textarea,
+select {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 1rem;
+    width: 100%;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    /* Smooth transition for hover and focus */
 }
 
 textarea {
@@ -51,12 +56,21 @@ button {
     border-radius: 5px;
     font-size: 1rem;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 button:hover {
     background-color: #749dc5;
+    transform: translateY(-2px);
+    /* Slight hover effect */
 }
 
+.error {
+    color: red;
+    font-size: 0.875rem;
+    margin-top: 5px;
+    margin-bottom: -10px;
+}
 
 .image-container {
     flex: 1;
@@ -76,7 +90,6 @@ button:hover {
     color: #555;
 }
 
-
 @media (max-width: 768px) {
     .upload-page-container {
         flex-direction: column;
@@ -86,19 +99,22 @@ button:hover {
         width: 100%;
     }
 
-    .form-container{
+    .form-container {
         max-width: 100%;
-        margin: 0;
+            padding: 0 10px;
+            margin-top: 10px;
     }
 
     .form-row {
         flex-direction: column;
     }
+
+    .image-container h1 {
+        font-size: 1.2rem;
+    }
 }
 
 @media (max-width: 490px) {
-
-    /* Adjust layout for mobile view */
     .upload-page-container {
         flex-direction: column;
         align-items: center;
@@ -112,34 +128,36 @@ button:hover {
         margin-top: 10px;
     }
 
-
-    .image-container {
-        /* display: flex; */
-        display: block;
-    }
-
-    .image-container h1{
-       font-size: 15px;
-    }
-    
     .form-row {
+        gap: 10px;
+        /* Reduce spacing for better mobile layout */
         flex-direction: column;
     }
 
-    .view-container{
+    .view-container {
         display: flex;
         align-items: center;
+        margin-top: 10px;
     }
+
     .form-container label,
     .form-container input,
-    .form-container textarea {
+    .form-container textarea,
+    .form-container select {
         width: 100%;
+        /* Ensure elements span the full width */
     }
 
-
     .form-container input,
-    .form-container textarea {
+    .form-container textarea,
+    .form-container select {
         padding: 8px;
         font-size: 14px;
+    }
+
+    .image-container h1 {
+        font-size: 1rem;
+        text-align: center;
+        line-height: 1.5;
     }
 }

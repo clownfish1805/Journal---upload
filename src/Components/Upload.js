@@ -12,13 +12,13 @@ const Upload = () => {
     issue: "",
     title: "",
     content: "",
-    date: "",
-    link: "",
+    author: "",
     specialIssue: "No",
+    pdf: "",
   });
 
+  const [pdfFile, setPdfFile] = useState(null);
   const [volumeError, setVolumeError] = useState("");
-
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -39,6 +39,21 @@ const Upload = () => {
     });
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      console.log("File Selected:", file); // Debugging
+    }
+
+    if (file && file.type === "application/pdf") {
+      setPdfFile(file);
+    } else {
+      alert("Please upload a valid PDF file.");
+      setPdfFile(null);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -47,31 +62,34 @@ const Upload = () => {
       return;
     }
 
-    const publicationData = {
-      ...formData,
-      isSpecialIssue: formData.specialIssue === "Yes" ? true : false,
-    };
-
-    console.log("Data being sent to backend:", publicationData);
+    const data = new FormData();
+    data.append("year", formData.year);
+    data.append("volume", formData.volume);
+    data.append("issue", formData.issue);
+    data.append("specialissue", formData.specialIssue);
+    data.append("title", formData.title);
+    data.append("content", formData.content);
+    data.append("author", formData.author);
+    data.append("pdf", pdfFile);
 
     try {
+      console.log("Form Data:", formData);
+      console.log("pdf", pdfFile);
+
       const response = await axios.post(
-        process.env.REACT_APP_BACKEND_URL,
-        publicationData
+        "https://publicationbackend-1.onrender.com/publications",
+        data
+        // {
+        //   headers: {
+        //     "Content-Type": "multipart/form-data",
+        //   },
+        // }
       );
+
       console.log("Publication submitted:", response.data);
       alert("Publication submitted successfully!");
-      setFormData({
-        year: "",
-        volume: "",
-        issue: "",
-        title: "",
-        content: "",
-        date: "",
-        link: "",
-        specialIssue: "No",
-      });
     } catch (error) {
+      console.error("Error response:", error.response?.data || error.message);
       console.error("Error submitting publication:", error);
       alert("Failed to submit publication.");
     }
@@ -169,11 +187,11 @@ const Upload = () => {
 
             <div className="form-row">
               <label>
-                Date:
+                Author:
                 <input
-                  type="date"
-                  name="date"
-                  value={formData.date}
+                  type="text"
+                  name="author"
+                  value={formData.author}
                   onChange={handleChange}
                   required
                 />
@@ -182,12 +200,11 @@ const Upload = () => {
 
             <div className="form-row">
               <label>
-                Link:
+                PDF:
                 <input
-                  type="url"
-                  name="link"
-                  value={formData.link}
-                  onChange={handleChange}
+                  type="file"
+                  accept="application/pdf"
+                  onChange={handleFileChange}
                   required
                 />
               </label>

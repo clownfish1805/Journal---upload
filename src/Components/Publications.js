@@ -109,6 +109,7 @@ const Publications = () => {
                 <th>Content</th>
                 <th>Link</th>
                 <th>Actions</th>
+                <th>PDF</th>
               </tr>
             </thead>
             <tbody>
@@ -143,6 +144,19 @@ const Publications = () => {
                     >
                       Delete
                     </button>
+                  </td>
+                  <td>
+                    {publication.link ? (
+                      <a
+                        href={publication.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <embed src={publication.link} type="application/pdf" />
+                      </a>
+                    ) : (
+                      "No PDF available"
+                    )}
                   </td>
                 </tr>
               ))}
